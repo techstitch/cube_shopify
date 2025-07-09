@@ -1,0 +1,169 @@
+.subscription-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.subscription-card-wrapper {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.subscription-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.subscription-card input[type='radio'] {
+    margin: 5px 5px 12px 0;
+    transform: scale(1.2);
+}
+
+.subscription-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: solid 1px #00000030;
+    padding-bottom: 7px;
+}
+
+.subscription-card-image img {
+    width: 80px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+    background: #f6f6f6;
+}
+
+.subscription-card-title {
+    font-weight: 400;
+    font-size: 1.9rem;
+}
+
+.subscription-card-price {
+    font-size: 1.9rem;
+    font-weight: 600;
+}
+
+.subscription-card-price s {
+    color: #999;
+    font-weight: 300;
+    margin-left: 5px;
+}
+
+.subscription-details {
+    margin-top: 1.25rem;
+    padding-left: 2.5rem;
+}
+
+.subscription-details h4 {
+    font-size: 1.4rem;
+}
+
+.flavour-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.flavour-card {
+    text-align: center;
+    cursor: pointer;
+    width: 90px;
+}
+
+.flavour-card input[type='radio'] {
+    display: none;
+}
+
+.flavour-thumbnail {
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f8f8f8;
+    padding: 5px;
+}
+
+.flavour-card input[type='radio']:checked+.flavour-thumbnail {
+    border-color: #000;
+}
+
+.flavour-thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.whats-included {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.included-block {
+    flex: 1 1 200px;
+    text-align: center;
+}
+
+.included-block h5 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.included-block img {
+    max-width: 100px;
+    height: auto;
+}
+
+.free {
+    color: green;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.preview-bottles {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.preview-bottles img {
+    width: 40px;
+    height: auto;
+}
+
+ul.features {
+    margin-top: 1rem;
+    list-style: disc;
+    padding-left: 1.25rem;
+}
+
+ul.features li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+#custom-subscription-form button[type='submit'] {
+    margin-top: 2rem;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#custom-subscription-form button[type='submit']:hover {
+    background-color: #333;
+}

@@ -98,7 +98,6 @@
   Custom Variant Picker for Subscription Products (based on Figma design)
   Assumes options: Subscription type (Single/Double), Flavour (Chocolate, Vanilla, Orange)
 {% endcomment %}
-
 <form method="post" action="/cart/add" id="custom-subscription-form">
   <div class="subscription-cards">
     {% assign single_features = product.metafields.content.single_drink_subscription_features %}
@@ -207,6 +206,7 @@
           </div>
 
           <div class="whats-included">
+            <p>What's included:</p>
             <div class="included-block">
               <h5>Every 30 Days</h5>
               <img src="{{ 'every30.png' | asset_url }}">
