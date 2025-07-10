@@ -18,7 +18,7 @@
 }
 
 .subscription-card input[type='radio'] {
-    margin: 5px 5px 12px 0;
+    margin: 5px 5px 5px 0;
     transform: scale(1.2);
 }
 
@@ -28,8 +28,15 @@
     gap: 1rem;
     justify-content: space-between;
     width: 100%;
+}
+
+.subscription-card:has(input:checked) .subscription-card-inner {
     border-bottom: solid 1px #00000030;
     padding-bottom: 7px;
+}
+
+.subscription-card input[type='radio']:checked {
+    margin: 5px 5px 12px 0;
 }
 
 .subscription-card-image img {
@@ -43,11 +50,13 @@
 .subscription-card-title {
     font-weight: 400;
     font-size: 1.9rem;
+    letter-spacing: 0;
 }
 
 .subscription-card-price {
     font-size: 1.9rem;
     font-weight: 600;
+    letter-spacing: 0;
 }
 
 .subscription-card-price s {
@@ -62,7 +71,8 @@
 }
 
 .subscription-details h4 {
-    font-size: 1.4rem;
+    font-size: 1.7rem;
+    margin: 1rem 0;
 }
 
 .flavour-options {
@@ -76,6 +86,11 @@
     text-align: center;
     cursor: pointer;
     width: 90px;
+}
+
+.flavour-card span {
+    font-size: 1.2rem;
+    color: #000;
 }
 
 .flavour-card input[type='radio'] {
@@ -105,22 +120,53 @@
     margin-top: 2rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 10px;
+}
+
+.whats-included h3 {
+    font-size: 1.7rem;
+    width: 100%;
+    margin: 0;
 }
 
 .included-block {
-    flex: 1 1 200px;
+    width: fit-content;
     text-align: center;
+    border: #ddd solid 2px;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.features li strong {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #000;
 }
 
 .included-block h5 {
-    font-size: 1rem;
+    font-size: 1.4rem;
+    color: #757575;
+    font-weight: 200;
+    text-align: left;
+    margin: 0;
     margin-bottom: 0.5rem;
 }
 
-.included-block img {
-    max-width: 100px;
-    height: auto;
+.included-block .image_container,
+.preview-bottles .image_container {
+    width: 74px;
+    height: 100px;
+    overflow: hidden;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.included-block img,
+.preview-bottles img {
+    width: auto;
+    height: 100%;
 }
 
 .free {
@@ -134,11 +180,6 @@
     justify-content: center;
     gap: 0.5rem;
     margin-top: 0.5rem;
-}
-
-.preview-bottles img {
-    width: 40px;
-    height: auto;
 }
 
 ul.features {

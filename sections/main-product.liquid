@@ -465,7 +465,297 @@
                 %}
 
               {%- when 'variant_picker' -%}
-                {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+                {% comment %} {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %} {% endcomment %}
+                <form method="post" action="/cart/add" id="custom-subscription-form">
+                  <div class="subscription-cards">
+                    {% assign single_features = product.metafields.content.single_drink_subscription_features %}
+                    {% assign double_features = product.metafields.content.double_drink_subscription_features %}
+
+                    {% for option in product.options_with_values[0].values %}
+                      {% assign current_variant = product.variants | where: 'option1', option | first %}
+                      <div class="subscription-card-wrapper">
+                        <label class="subscription-card">
+                          <input
+                            type="radio"
+                            name="subscription_type"
+                            value="{{ option }}"
+                            {% if forloop.first %}
+                              checked
+                            {% endif %}
+                          >
+                          <div class="subscription-card-inner">
+                            {% comment %}
+                              <div class="subscription-card-image">
+                                {% if current_variant.featured_image %}
+                                  <img src="{{ current_variant.featured_image | image_url: width: 300 }}" alt="{{ option }}">
+                                {% endif %}
+                              </div>
+                            {% endcomment %}
+                            <div class="subscription-card-title">
+                              {{ option }}
+                            </div>
+                            <div class="subscription-card-price">
+                              {{ current_variant.price | money }}
+                              <s>{{ current_variant.compare_at_price | money }}</s>
+                            </div>
+                          </div>
+                        </label>
+                        <div
+                          class="subscription-details"
+                          style="display: {% if forloop.first %}block{% else %}none{% endif %};"
+                        >
+                          <div class="flavour-picker">
+                            {% if option == 'Double Drink Subscription' %}
+                              <h4>Choose Flavor 1</h4>
+                              <div class="flavour-options">
+                                {% for flavor in product.options_with_values[1].values %}
+                                  <label class="flavour-card">
+                                    <input
+                                      type="radio"
+                                      name="flavour1"
+                                      value="{{ flavor }}"
+                                      {% if forloop.first %}
+                                        checked
+                                      {% endif %}
+                                    >
+                                    <div class="flavour-thumbnail">
+                                      {% assign v = product.variants
+                                        | where: 'option1', option
+                                        | where: 'option2', flavor
+                                        | first
+                                      %}
+                                      {% if v.featured_image %}
+                                        <img src="{{ v.featured_image | image_url: width: 100 }}" alt="{{ flavor }}">
+                                      {% endif %}
+                                    </div>
+                                    <span>{{ flavor }}</span>
+                                  </label>
+                                {% endfor %}
+                              </div>
+                              <h4>Choose Flavor 2</h4>
+                              <div class="flavour-options">
+                                {% for flavor in product.options_with_values[1].values %}
+                                  <label class="flavour-card">
+                                    <input
+                                      type="radio"
+                                      name="flavour2"
+                                      value="{{ flavor }}"
+                                      {% if forloop.index == 2 %}
+                                        checked
+                                      {% endif %}
+                                    >
+                                    <div class="flavour-thumbnail">
+                                      {% assign v = product.variants
+                                        | where: 'option1', option
+                                        | where: 'option2', flavor
+                                        | first
+                                      %}
+                                      {% if v.featured_image %}
+                                        <img src="{{ v.featured_image | image_url: width: 100 }}" alt="{{ flavor }}">
+                                      {% endif %}
+                                    </div>
+                                    <span>{{ flavor }}</span>
+                                  </label>
+                                {% endfor %}
+                              </div>
+                            {% else %}
+                              <h4>Choose Flavor</h4>
+                              <div class="flavour-options">
+                                {% for flavor in product.options_with_values[1].values %}
+                                  <label class="flavour-card">
+                                    <input
+                                      type="radio"
+                                      name="flavour1"
+                                      value="{{ flavor }}"
+                                      {% if forloop.first %}
+                                        checked
+                                      {% endif %}
+                                    >
+                                    <div class="flavour-thumbnail">
+                                      {% assign v = product.variants
+                                        | where: 'option1', option
+                                        | where: 'option2', flavor
+                                        | first
+                                      %}
+                                      {% if v.featured_image %}
+                                        <img src="{{ v.featured_image | image_url: width: 100 }}" alt="{{ flavor }}">
+                                      {% endif %}
+                                    </div>
+                                    <span>{{ flavor }}</span>
+                                  </label>
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+
+                          <div class="whats-included">
+                            <h3>What's Included:</h3>
+                            <div class="included-block">
+                              <h5>Every 30 Days</h5>
+                              <div class="image_container">
+                                <img src="{{ v.featured_image | image_url: width: 60 }}" alt="{{ flavor }}">
+                              </div>
+                            </div>
+                            <div class="included-block">
+                              <h5>One Time <span class="free">(Free)</span></h5>
+                              <div class="preview-bottles">
+                                {% for flavor in product.options_with_values[1].values %}
+                                  {% assign v = product.variants
+                                    | where: 'option1', option
+                                    | where: 'option2', flavor
+                                    | first
+                                  %}
+                                  {% if v.featured_image %}
+                                    <div class="image_container">
+                                      <img src="{{ v.featured_image | image_url: width: 60 }}" alt="{{ flavor }}">
+                                    </div>
+                                  {% endif %}
+                                {% endfor %}
+                              </div>
+                            </div>
+                            <ul class="features">
+                              {% if option == 'Single Drink Subscription' %}
+                                {% assign feature_items = single_features %}
+                              {% else %}
+                                {% assign feature_items = double_features %}
+                              {% endif %}
+
+                              {% for feature in feature_items.value %}
+                                <li>
+                                  <strong>{{ feature }}</strong>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                  <div id="variant-id-container"></div>
+                  {% comment %} <button type="submit">Add to Cart</button> {% endcomment %}
+                </form>
+                <script>
+                    const variants = {{ product.variants | json }};
+                    const container = document.getElementById('variant-id-container');
+                    const mainImage = document.querySelector('.product__media img'); // Adjust selector as needed
+
+                    function updateVariantID() {
+                    const type = document.querySelector('input[name="subscription_type"]:checked')?.value;
+                    const flavour1 = document.querySelector('input[name="flavour1"]:checked')?.value;
+                    const flavour2 = document.querySelector('input[name="flavour2"]:checked')?.value || '';
+
+                    container.innerHTML = '';
+
+                    if (type === 'Double Drink Subscription') {
+                      const variant1 = variants.find(v => v.option1 === type && v.option2 === flavour1);
+                      const variant2 = variants.find(v => v.option1 === type && v.option2 === flavour2);
+
+                      if (variant1) {
+                        container.innerHTML += `
+                          <input type="hidden" name="items[][id]" value="${variant1.id}">
+                          <input type="hidden" name="items[][quantity]" value="1">
+                        `;
+                        updateShopifyVariant(variant1);
+                      }
+
+                      if (variant2) {
+                        container.innerHTML += `
+                          <input type="hidden" name="items[][id]" value="${variant2.id}">
+                          <input type="hidden" name="items[][quantity]" value="1">
+                        `;
+                      }
+                    } else {
+                      const variant = variants.find(v => v.option1 === type && v.option2 === flavour1);
+                      if (variant) {
+                        container.innerHTML = `<input type="hidden" name="id" value="${variant.id}">`;
+                        updateShopifyVariant(variant);
+                      }
+                    }
+                    }
+
+                    function updateShopifyVariant(variant) {
+                    // Update URL without reload
+                    const url = new URL(window.location);
+                    url.searchParams.set("variant", variant.id);
+                    window.history.replaceState({}, '', url.toString());
+
+                    // Update main product image (optional)
+                    if (variant.featured_image && mainImage) {
+                      mainImage.src = variant.featured_image.src;
+                      mainImage.srcset = ''; // Optional: reset srcset if used
+                    }
+
+                    // Trigger global variant change
+                    document.dispatchEvent(new CustomEvent("variant:change", { detail: { variant } }));
+                    }
+
+                    function handleRadioChange(event) {
+                    const target = event.target;
+
+                    if (target.name === 'subscription_type') {
+                      document.querySelectorAll('.subscription-details').forEach(div => div.style.display = 'none');
+                      target.closest('.subscription-card-wrapper').querySelector('.subscription-details').style.display = 'block';
+                    }
+
+                    updateVariantID();
+                    }
+
+                    document.querySelectorAll('input[type="radio"]').forEach(el => {
+                    el.addEventListener('change', handleRadioChange);
+                    });
+
+                    // Initial setup
+                    updateVariantID();
+
+                      // Intercept form submit
+  const form = document.querySelector('#custom-subscription-form');
+
+  form.addEventListener('submit', function (e) {
+    const type = document.querySelector('input[name="subscription_type"]:checked')?.value;
+    const flavour1 = document.querySelector('input[name="flavour1"]:checked')?.value;
+    const flavour2 = document.querySelector('input[name="flavour2"]:checked')?.value || '';
+
+    if (type === 'Double Drink Subscription') {
+      e.preventDefault(); // stop normal form submission
+
+      const variant1 = variants.find(v => v.option1 === type && v.option2 === flavour1);
+      const variant2 = variants.find(v => v.option1 === type && v.option2 === flavour2);
+
+      const formData = new FormData();
+      if (variant1) {
+        formData.append('items[][id]', variant1.id);
+        formData.append('items[][quantity]', 1);
+      }
+      if (variant2) {
+        formData.append('items[][id]', variant2.id);
+        formData.append('items[][quantity]', 1);
+      }
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        if (response.ok) {
+          // Redirect or update cart drawer here
+          window.location.href = '/cart'; // Or show drawer
+        } else {
+          return response.json().then(err => {
+            console.error('Error:', err.description);
+            alert('Error adding to cart: ' + err.description);
+          });
+        }
+      })
+      .catch(err => {
+        console.error('Network Error:', err);
+        alert('Network error. Please try again.');
+      });
+    }
+
+    // if it's single variant, form will submit normally
+  });
+                </script>
               {%- when 'buy_buttons' -%}
                 {%- render 'buy-buttons',
                   block: block,

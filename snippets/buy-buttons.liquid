@@ -43,19 +43,24 @@
         novalidate: 'novalidate',
         data-type: 'add-to-cart-form'
       -%}
-        <input
-          type="hidden"
-          name="id"
-          value="{{ product.selected_or_first_available_variant.id }}"
-          {% if product.selected_or_first_available_variant.available == false
-            or quantity_rule_soldout
-            or product.selected_or_first_available_variant == null
-          %}
-            disabled
-          {% endif %}
-          class="product-variant-id"
-        >
-
+        {% comment %}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}"
+            {% if product.selected_or_first_available_variant.available == false
+              or quantity_rule_soldout
+              or product.selected_or_first_available_variant == null
+            %}
+              disabled
+            {% endif %}
+            class="product-variant-id"
+          >
+        {% endcomment %}
+        <input type="hidden" name="items[][id]" value="variant1_id">
+        <input type="hidden" name="items[][quantity]" value="1">
+        <input type="hidden" name="items[][id]" value="variant2_id">
+        <input type="hidden" name="items[][quantity]" value="1">
         {%- if gift_card_recipient_feature_active -%}
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
         {%- endif -%}
