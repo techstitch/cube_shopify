@@ -13,14 +13,16 @@
 .subscription-card {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1rem; 
     cursor: pointer;
 }
 
 .subscription-card input[type='radio'] {
     margin: 5px 5px 5px 0;
     transform: scale(1.2);
+    accent-color: #000; /* This line sets the radio button color in modern browsers */
 }
+
 
 .subscription-card-inner {
     display: flex;
@@ -49,12 +51,12 @@
 
 .subscription-card-title {
     font-weight: 400;
-    font-size: 1.9rem;
+    font-size: 1.8rem;
     letter-spacing: 0;
 }
 
 .subscription-card-price {
-    font-size: 1.9rem;
+    font-size: 1.8rem;
     font-weight: 600;
     letter-spacing: 0;
 }
@@ -66,8 +68,21 @@
 }
 
 .subscription-details {
-    margin-top: 1.25rem;
-    padding-left: 2.5rem;
+  padding-left: 2.5rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  will-change: max-height, opacity;
+}
+
+.subscription-details.open {
+  margin-top: 1.25rem;
+  max-height: 1000px; /* increase to 3000px if you're using large blocks */
+  opacity: 1;
+}
+.subscription-cards:not(.loaded) .subscription-details {
+  transition: none !important;
 }
 
 .subscription-details h4 {
@@ -105,7 +120,7 @@
     padding: 5px;
 }
 
-.flavour-card input[type='radio']:checked+.flavour-thumbnail {
+.flavour-card:has(input[type='radio']:checked) .flavour-thumbnail {
     border-color: #000;
 }
 
@@ -144,7 +159,7 @@
 }
 
 .included-block h5 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: #757575;
     font-weight: 200;
     text-align: left;
@@ -154,7 +169,7 @@
 
 .included-block .image_container,
 .preview-bottles .image_container {
-    width: 74px;
+    width: 80px;
     height: 100px;
     overflow: hidden;
     object-fit: cover;
@@ -170,9 +185,8 @@
 }
 
 .free {
-    color: green;
+    color: #D0AF80;
     font-weight: bold;
-    font-size: 0.9rem;
 }
 
 .preview-bottles {
@@ -186,6 +200,7 @@ ul.features {
     margin-top: 1rem;
     list-style: disc;
     padding-left: 1.25rem;
+    margin-bottom: 0;
 }
 
 ul.features li {
@@ -203,6 +218,11 @@ ul.features li {
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s ease;
+    font-size: 1.7rem;
+    padding: 13px;
+    border-radius: 70px;
+    width: 100%;
+    font-weight: 600;
 }
 
 #custom-subscription-form button[type='submit']:hover {
